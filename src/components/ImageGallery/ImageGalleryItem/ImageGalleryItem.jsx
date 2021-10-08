@@ -8,6 +8,7 @@ export default function ImageGalleryItem({
   return (
     <>
       <img
+        // onClick={onClick}
         src={webformatURL}
         data-src={largeImageURL}
         alt={tags}

@@ -1,11 +1,6 @@
-export default function Button({ props }) {
+export default function Button({ onClick }) {
   return (
-    <button
-      type="button"
-      name="Load more"
-      className="Button"
-      style={{ color: 'white', margin: '0 auto' }}
-    >
+    <button type="button" name="Load more" className="Button" onClick={onClick}>
       <span className="lable">Load more</span>
     </button>
   );
