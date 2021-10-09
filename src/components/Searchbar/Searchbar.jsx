@@ -8,7 +8,7 @@ class SearchBar extends Component {
   handleChange = e => {
     // console.log(e.currentTarget.value);
     this.setState({ searchQuery: e.currentTarget.value.toLowerCase() });
-    console.log(this.state);
+    // console.log(this.state);
   };
 
   handleSubmit = e => {
@@ -17,7 +17,7 @@ class SearchBar extends Component {
       return toast.error('Введите Ваш Запрос');
     }
 
-    console.log(this.state);
+    // console.log(this.state);
     this.props.onSubmit(this.state.searchQuery);
     this.setState({ searchQuery: '' });
   };

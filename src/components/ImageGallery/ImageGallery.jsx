@@ -5,6 +5,7 @@ import ScrollContent from 'components/Scroll';
 import FetchImages from 'service/Api';
 import ImageGalleryList from 'components/ImageGallery/ImageGalleryList';
 import Button from 'components/Button';
+import Modal from 'components/Modal';
 
 class ImageGallery extends Component {
   state = {
@@ -14,7 +15,16 @@ class ImageGallery extends Component {
     loadMore: false,
     error: null,
     status: 'idle',
+    showModal: false,
   };
+  componentDidMount() {
+    // console.log('ModalDidMount');
+    window.addEventListener('click', this.handleClick);
+  }
+  componentWillUnmount() {
+    // console.log('ModalUnMount');
+    window.removeEventListener('click', this.handleClick);
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const prevSearchQuery = prevProps.searchQuery;
@@ -24,6 +34,7 @@ class ImageGallery extends Component {
 
     if (prevSearchQuery !== nextSearchQuery || prevPage !== nextPage) {
       this.setState({ status: 'pending' });
+      console.log(nextPage);
 
       FetchImages(nextSearchQuery, nextPage)
         .then(images => images.hits)
@@ -34,8 +45,11 @@ class ImageGallery extends Component {
               loadMore: true,
               status: 'resolved',
             },
-            ScrollContent,
+            // ScrollContent,
           );
+          if (nextPage > 1) {
+            ScrollContent();
+          }
           // console.log(prevState.images);
           // console.log(this.state.images);
         })
@@ -49,8 +63,20 @@ class ImageGallery extends Component {
     console.log(page);
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
+  handleClick = e => {
+    // console.log(e.target.nodeName);
+    if (e.target.nodeName === 'IMG') {
+      console.log(e.target.nodeName);
+      this.toggleModal();
+    }
+  };
+
   render() {
-    const { status, error, images, loadMore } = this.state;
+    const { status, error, images, loadMore, showModal } = this.state;
 
     if (status === 'idle')
       return <h1 style={{ color: '#3f51b5' }}>Enter Your Request</h1>;
@@ -74,8 +100,14 @@ class ImageGallery extends Component {
     if (status === 'resolved')
       return (
         <div>
-          <ImageGalleryList images={images} />
+          <ImageGalleryList images={images} onClick={this.handleClick} />
           {loadMore && <Button onClick={this.onLoadMore} />}
+
+          {showModal && (
+            <Modal onClose={this.toggleModal}>
+              <img src={images.largeImageURL} alt={images.tag} />
+            </Modal>
+          )}
         </div>
       );
   }

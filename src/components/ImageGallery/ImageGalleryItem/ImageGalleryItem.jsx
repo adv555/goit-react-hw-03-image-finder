@@ -5,10 +5,11 @@ export default function ImageGalleryItem({
   largeImageURL,
   tags,
 }) {
+  // console.log(largeImageURL);
   return (
     <>
       <img
-        // onClick={onClick}
+        // onClick={onClick(largeImageURL)}
         src={webformatURL}
         data-src={largeImageURL}
         alt={tags}

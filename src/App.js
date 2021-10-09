@@ -4,17 +4,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import SearchBar from 'components/Searchbar';
 import ImageGallery from 'components/ImageGallery';
-import Modal from 'components/Modal';
+// import Modal from 'components/Modal';
 
 class App extends Component {
   state = {
     searchQuery: '',
-    showModal: false,
+    // showModal: false,
   };
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({ showModal: !showModal }));
-  };
+  // toggleModal = () => {
+  //   this.setState(({ showModal }) => ({ showModal: !showModal }));
+  // };
 
   handleFormSubmit = searchQuery => {
     // console.log(searchQuery);
@@ -22,7 +22,7 @@ class App extends Component {
   };
 
   render() {
-    const { searchQuery, showModal } = this.state;
+    const { searchQuery } = this.state;
 
     return (
       <div className="App">
@@ -31,7 +31,6 @@ class App extends Component {
         <ImageGallery searchQuery={searchQuery} />
 
         <ToastContainer autoClose={3000} theme={'colored'} />
-        {showModal && <Modal onClose={this.toggleModal}>Test</Modal>}
       </div>
     );
   }
