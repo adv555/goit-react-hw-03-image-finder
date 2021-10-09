@@ -16,10 +16,12 @@ class ImageGallery extends Component {
     error: null,
     status: 'idle',
     showModal: false,
+    largeImageURL: '',
+    imageAlt: '',
   };
   componentDidMount() {
     // console.log('ModalDidMount');
-    window.addEventListener('click', this.handleClick);
+    window.addEventListener('click', this.onImageClick);
   }
   componentWillUnmount() {
     // console.log('ModalUnMount');
@@ -67,16 +69,26 @@ class ImageGallery extends Component {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
-  handleClick = e => {
+  onImageClick = e => {
     // console.log(e.target.nodeName);
     if (e.target.nodeName === 'IMG') {
-      console.log(e.target.nodeName);
+      const dataSrc = e.target.dataset.src;
+      const alt = e.target.alt;
+      this.setState({ largeImageURL: dataSrc, imageAlt: alt });
       this.toggleModal();
     }
   };
 
   render() {
-    const { status, error, images, loadMore, showModal } = this.state;
+    const {
+      status,
+      error,
+      images,
+      loadMore,
+      showModal,
+      largeImageURL,
+      imageAlt,
+    } = this.state;
 
     if (status === 'idle')
       return <h1 style={{ color: '#3f51b5' }}>Enter Your Request</h1>;
@@ -100,12 +112,16 @@ class ImageGallery extends Component {
     if (status === 'resolved')
       return (
         <div>
-          <ImageGalleryList images={images} onClick={this.handleClick} />
+          <ImageGalleryList images={images} />
           {loadMore && <Button onClick={this.onLoadMore} />}
 
           {showModal && (
             <Modal onClose={this.toggleModal}>
-              <img src={images.largeImageURL} alt={images.tag} />
+              <img
+                src={largeImageURL}
+                alt={imageAlt}
+                style={{ maxHeight: '80vh', background: 'white' }}
+              />
             </Modal>
           )}
         </div>

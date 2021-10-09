@@ -1,9 +1,8 @@
 // import React, { Component } from 'react';
 import ImageGalleryItem from 'components/ImageGallery/ImageGalleryItem';
 
-export default function ImageGalleryList({ images }, onClick) {
+export default function ImageGalleryList({ images }) {
   // console.log(images);
-
   return (
     <ul className="ImageGallery">
       {images.map(image => (
