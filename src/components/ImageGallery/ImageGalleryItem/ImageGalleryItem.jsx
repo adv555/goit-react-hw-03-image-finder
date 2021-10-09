@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export default function ImageGalleryItem({
   webformatURL,
@@ -21,3 +21,9 @@ export default function ImageGalleryItem({
     </>
   );
 }
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  onImageClick: PropTypes.func.isRequired,
+};

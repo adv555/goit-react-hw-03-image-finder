@@ -11,7 +11,7 @@ const FetchImages = (searchQuery, page = 1, perPage = 12) => {
     }
     return Promise.reject(
       new Error(
-        `по вашему запосу ${this.state.searchQuery}  нічего не найдено`,
+        `no results were found for your search ${this.state.searchQuery}`,
       ),
     ); // если 404
   });
