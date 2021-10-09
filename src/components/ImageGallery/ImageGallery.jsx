@@ -36,24 +36,18 @@ class ImageGallery extends Component {
 
     if (prevSearchQuery !== nextSearchQuery || prevPage !== nextPage) {
       this.setState({ status: 'pending' });
-      console.log(nextPage);
 
       FetchImages(nextSearchQuery, nextPage)
         .then(images => images.hits)
         .then(images => {
-          this.setState(
-            {
-              images: [...prevState.images, ...images],
-              loadMore: true,
-              status: 'resolved',
-            },
-            // ScrollContent,
-          );
+          this.setState({
+            images: [...prevState.images, ...images],
+            loadMore: true,
+            status: 'resolved',
+          });
           if (nextPage > 1) {
             ScrollContent();
           }
-          // console.log(prevState.images);
-          // console.log(this.state.images);
         })
         .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404
     }
@@ -62,7 +56,6 @@ class ImageGallery extends Component {
   onLoadMore = () => {
     const { page } = this.state;
     this.setState({ page: page + 1 });
-    console.log(page);
   };
 
   toggleModal = () => {

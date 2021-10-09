@@ -4,17 +4,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import SearchBar from 'components/Searchbar';
 import ImageGallery from 'components/ImageGallery';
-// import Modal from 'components/Modal';
 
 class App extends Component {
   state = {
     searchQuery: '',
-    // showModal: false,
   };
-
-  // toggleModal = () => {
-  //   this.setState(({ showModal }) => ({ showModal: !showModal }));
-  // };
 
   handleFormSubmit = searchQuery => {
     // console.log(searchQuery);
