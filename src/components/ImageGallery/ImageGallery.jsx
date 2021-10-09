@@ -9,7 +9,6 @@ import Modal from 'components/Modal';
 
 class ImageGallery extends Component {
   state = {
-    // searchQuery: '',
     images: [],
     page: 1,
     loadMore: false,
@@ -19,14 +18,6 @@ class ImageGallery extends Component {
     largeImageURL: '',
     imageAlt: '',
   };
-  componentDidMount() {
-    // console.log('ModalDidMount');
-    window.addEventListener('click', this.onImageClick);
-  }
-  componentWillUnmount() {
-    // console.log('ModalUnMount');
-    window.removeEventListener('click', this.handleClick);
-  }
 
   componentDidUpdate(prevProps, prevState) {
     const prevSearchQuery = prevProps.searchQuery;
@@ -63,13 +54,13 @@ class ImageGallery extends Component {
   };
 
   onImageClick = e => {
-    // console.log(e.target.nodeName);
-    if (e.target.nodeName === 'IMG') {
-      const dataSrc = e.target.dataset.src;
-      const alt = e.target.alt;
-      this.setState({ largeImageURL: dataSrc, imageAlt: alt });
-      this.toggleModal();
-    }
+    const dataSrc = e.target.dataset.src;
+    const alt = e.target.alt;
+    this.setState({
+      largeImageURL: dataSrc,
+      imageAlt: alt,
+      showModal: true,
+    });
   };
 
   render() {
@@ -105,7 +96,7 @@ class ImageGallery extends Component {
     if (status === 'resolved')
       return (
         <div>
-          <ImageGalleryList images={images} />
+          <ImageGalleryList images={images} onImageClick={this.onImageClick} />
           {loadMore && <Button onClick={this.onLoadMore} />}
 
           {showModal && (
@@ -123,3 +114,26 @@ class ImageGallery extends Component {
 }
 
 export default ImageGallery;
+
+// componentDidMount() {
+//   // console.log('ModalDidMount');
+//   window.addEventListener('click', this.onImageClick);
+// }
+// componentWillUnmount() {
+//   // console.log('ModalUnMount');
+//   window.removeEventListener('click', this.handleClick);
+// }
+// onImageClick = e => {
+//   if (e.target.nodeName === 'IMG') {
+//     const dataSrc = e.target.dataset.src;
+//     const alt = e.target.alt;
+//     this.setState({
+//       largeImageURL: dataSrc,
+//       imageAlt: alt,
+//       showModal: true,
+//     });
+//     // console.log(e.target);
+//     // console.log(e.currentTarget);
+//     // this.toggleModal();
+//   }
+// };
