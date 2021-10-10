@@ -1,11 +1,15 @@
 import { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import ScrollContent from 'components/Scroll';
+import fetchImages from 'service/Api';
+import scrollContent from 'utils/scroll';
 
-import FetchImages from 'service/Api';
 import ImageGalleryList from 'components/ImageGallery/ImageGalleryList';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
+import {
+  ShearchMessage,
+  NothingFoundMessage,
+} from 'components/Notices/Notices';
 
 class ImageGallery extends Component {
   state = {
@@ -28,7 +32,7 @@ class ImageGallery extends Component {
     if (prevSearchQuery !== nextSearchQuery) {
       this.setState({ status: 'pending' });
 
-      FetchImages(nextSearchQuery, nextPage)
+      fetchImages(nextSearchQuery, nextPage)
         .then(images => {
           this.setState({
             images: [...prevState.images, ...images],
@@ -39,14 +43,14 @@ class ImageGallery extends Component {
         .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404
     }
     if (prevPage !== nextPage) {
-      FetchImages(nextSearchQuery, nextPage)
+      fetchImages(nextSearchQuery, nextPage)
         .then(images => {
           this.setState({
             images: [...prevState.images, ...images],
             loadMore: true,
             status: 'resolved',
           });
-          ScrollContent();
+          scrollContent();
         })
         .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404
     }
@@ -82,24 +86,15 @@ class ImageGallery extends Component {
       imageAlt,
     } = this.state;
 
-    if (status === 'idle')
-      return <h1 style={{ color: '#3f51b5' }}>Enter Your Request</h1>;
+    if (status === 'idle') return <ShearchMessage />;
 
     if (status === 'pending')
-      return (
-        <div>
-          <Loader type="ThreeDots" color="#3f51b5" height={80} width={80} />
-        </div>
-      );
+      return <Loader type="ThreeDots" color="#3f51b5" height={80} width={80} />;
 
     if (status === 'rejected') return <h1>{error.message}</h1>;
 
     if (status === 'resolved' && images.length < 1)
-      return (
-        <h2 style={{ color: 'tomato' }}>
-          No image has been found. Please enter a more specific query!
-        </h2>
-      );
+      return <NothingFoundMessage />;
 
     if (status === 'resolved')
       return (

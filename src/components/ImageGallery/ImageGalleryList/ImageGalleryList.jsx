@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGallery/ImageGalleryItem';
 
 export default function ImageGalleryList({ images, onImageClick }) {
-  console.log(images, onImageClick);
+  // console.log(images, onImageClick);
   return (
     <ul className="ImageGallery">
       {images.map(image => (

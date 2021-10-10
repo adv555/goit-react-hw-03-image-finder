@@ -1,8 +1,8 @@
-const ScrollContent = () => {
+const scrollContent = () => {
   window.scrollTo({
     top: document.documentElement.scrollHeight,
     behavior: 'smooth',
   });
 };
 
-export default ScrollContent;
+export default scrollContent;

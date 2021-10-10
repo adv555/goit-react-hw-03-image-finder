@@ -6,7 +6,6 @@ export default function ImageGalleryItem({
   tags,
   onImageClick,
 }) {
-  // console.log(largeImageURL);
   return (
     <>
       <img
