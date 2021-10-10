@@ -25,20 +25,28 @@ class ImageGallery extends Component {
     const prevPage = prevState.page;
     const nextPage = this.state.page;
 
-    if (prevSearchQuery !== nextSearchQuery || prevPage !== nextPage) {
-      // this.setState({ status: 'pending' });
+    if (prevSearchQuery !== nextSearchQuery) {
+      this.setState({ status: 'pending' });
 
       FetchImages(nextSearchQuery, nextPage)
-        .then(images => images.hits)
         .then(images => {
           this.setState({
             images: [...prevState.images, ...images],
             loadMore: true,
             status: 'resolved',
           });
-          if (nextPage > 1) {
-            ScrollContent();
-          }
+        })
+        .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404
+    }
+    if (prevPage !== nextPage) {
+      FetchImages(nextSearchQuery, nextPage)
+        .then(images => {
+          this.setState({
+            images: [...prevState.images, ...images],
+            loadMore: true,
+            status: 'resolved',
+          });
+          ScrollContent();
         })
         .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404
     }
