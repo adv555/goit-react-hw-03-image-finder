@@ -26,25 +26,18 @@ class ImageGallery extends Component {
     const nextPage = this.state.page;
 
     if (prevSearchQuery !== nextSearchQuery || prevPage !== nextPage) {
-      this.setState({ status: 'pending' });
+      // this.setState({ status: 'pending' });
 
       FetchImages(nextSearchQuery, nextPage)
         .then(images => images.hits)
         .then(images => {
           this.setState({
-            images: [...images],
+            images: [...prevState.images, ...images],
             loadMore: true,
             status: 'resolved',
           });
           if (nextPage > 1) {
-            this.setState(
-              {
-                images: [...prevState.images, ...images],
-                loadMore: true,
-                status: 'resolved',
-              },
-              ScrollContent(),
-            );
+            ScrollContent();
           }
         })
         .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404
@@ -121,26 +114,3 @@ class ImageGallery extends Component {
 }
 
 export default ImageGallery;
-
-// componentDidMount() {
-//   // console.log('ModalDidMount');
-//   window.addEventListener('click', this.onImageClick);
-// }
-// componentWillUnmount() {
-//   // console.log('ModalUnMount');
-//   window.removeEventListener('click', this.handleClick);
-// }
-// onImageClick = e => {
-//   if (e.target.nodeName === 'IMG') {
-//     const dataSrc = e.target.dataset.src;
-//     const alt = e.target.alt;
-//     this.setState({
-//       largeImageURL: dataSrc,
-//       imageAlt: alt,
-//       showModal: true,
-//     });
-//     // console.log(e.target);
-//     // console.log(e.currentTarget);
-//     // this.toggleModal();
-//   }
-// };
