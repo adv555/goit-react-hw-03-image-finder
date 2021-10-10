@@ -32,12 +32,19 @@ class ImageGallery extends Component {
         .then(images => images.hits)
         .then(images => {
           this.setState({
-            images: [...prevState.images, ...images],
+            images: [...images],
             loadMore: true,
             status: 'resolved',
           });
           if (nextPage > 1) {
-            ScrollContent();
+            this.setState(
+              {
+                images: [...prevState.images, ...images],
+                loadMore: true,
+                status: 'resolved',
+              },
+              ScrollContent(),
+            );
           }
         })
         .catch(error => this.setState({ error, status: 'rejected' })); //== если не 404

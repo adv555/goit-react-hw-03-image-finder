@@ -5,6 +5,7 @@ class SearchBar extends Component {
   state = {
     searchQuery: '',
   };
+
   handleChange = e => {
     // console.log(e.currentTarget.value);
     this.setState({ searchQuery: e.currentTarget.value.toLowerCase() });
