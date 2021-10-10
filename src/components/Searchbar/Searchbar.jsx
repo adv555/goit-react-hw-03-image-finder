@@ -23,9 +23,11 @@ class SearchBar extends Component {
     this.setState({ searchQuery: '' });
   };
   render() {
+    const { handleSubmit, handleChange } = this;
+
     return (
       <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.handleSubmit}>
+        <form className="SearchForm" onSubmit={handleSubmit}>
           <button type="submit" className="SearchForm-button">
             <span className="SearchForm-button-label">Search</span>
           </button>
@@ -36,7 +38,7 @@ class SearchBar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </form>
       </header>

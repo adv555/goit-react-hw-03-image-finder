@@ -24,8 +24,10 @@ class Modal extends Component {
   };
 
   render() {
+    const { handleBackdropClick } = this;
+
     return createPortal(
-      <div className="Overlay" onClick={this.handleBackdropClick}>
+      <div className="Overlay" onClick={handleBackdropClick}>
         <div className="Modal">{this.props.children}</div>
       </div>,
       modalRoot,

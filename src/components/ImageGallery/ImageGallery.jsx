@@ -77,14 +77,19 @@ class ImageGallery extends Component {
 
   render() {
     const {
-      status,
-      error,
-      images,
-      loadMore,
-      showModal,
-      largeImageURL,
-      imageAlt,
-    } = this.state;
+      state: {
+        status,
+        error,
+        images,
+        loadMore,
+        showModal,
+        largeImageURL,
+        imageAlt,
+      },
+      onImageClick,
+      onLoadMore,
+      toggleModal,
+    } = this;
 
     if (status === 'idle') return <ShearchMessage />;
 
@@ -99,11 +104,11 @@ class ImageGallery extends Component {
     if (status === 'resolved')
       return (
         <div>
-          <ImageGalleryList images={images} onImageClick={this.onImageClick} />
-          {loadMore && <Button onClick={this.onLoadMore} />}
+          <ImageGalleryList images={images} onImageClick={onImageClick} />
+          {loadMore && <Button onClick={onLoadMore} />}
 
           {showModal && (
-            <Modal onClose={this.toggleModal}>
+            <Modal onClose={toggleModal}>
               <img
                 src={largeImageURL}
                 alt={imageAlt}
