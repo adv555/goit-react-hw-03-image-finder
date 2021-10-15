@@ -24,6 +24,7 @@ class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.props);
     const prevSearchQuery = prevProps.searchQuery;
     const nextSearchQuery = this.props.searchQuery;
     const prevPage = prevState.page;
@@ -35,7 +36,7 @@ class ImageGallery extends Component {
       fetchImages(nextSearchQuery, nextPage)
         .then(images => {
           this.setState({
-            images: [...prevState.images, ...images],
+            images: [...images],
             loadMore: true,
             status: 'resolved',
           });
